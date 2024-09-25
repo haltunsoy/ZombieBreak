@@ -65,10 +65,13 @@ if(reloading)
 
 firingprogress -= delta_time;
 
+
 if (mouse_check_button(mb_left) && magammo>0 && firingprogress<0 && reloading == false)
 {
 	firingprogress = firerate;
-    instance_create_layer(x, y, "Instances", obj_bullet);
+	var spawn_x = x + lengthdir_x(15, direction);
+	var spawn_y = y + lengthdir_y(15, direction);
+    instance_create_layer(x, y, "Instances", obj_laser);
 		magammo = magammo -1;
 	var knockback_vector = [image_vector[0] * -1 * recoil, image_vector[1] * -1 * recoil];
 	hspeed += knockback_vector[0];

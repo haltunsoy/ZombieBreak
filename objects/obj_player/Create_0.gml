@@ -1,4 +1,4 @@
-hp = 10;
+hp = 20;
 
 hspeed = 0;
 vspeed = 0;

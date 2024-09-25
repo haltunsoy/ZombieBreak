@@ -1,5 +1,5 @@
 max_zombies = 49;
-zombies_spawnspeed = 25;
+zombies_spawnspeed = 205;
 
 
 
