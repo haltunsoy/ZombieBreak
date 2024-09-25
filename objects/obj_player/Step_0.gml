@@ -3,22 +3,45 @@ var vmove = (keyboard_check(vk_down)|| keyboard_check(ord("S"))) - (keyboard_che
 hspeed = hmove * move_speed;
 vspeed = vmove * move_speed;
 //control
-
 image_angle = point_direction(x ,y ,mouse_x ,mouse_y);
  image_vector = [ lengthdir_x(1, image_angle), lengthdir_y(1, image_angle)];
+if (keyboard_check(vk_lshift)){move_speed = 0.5;} else{move_speed = 1;}
+//speed normalisation
+if (hmove != 0 || vmove != 0) {
+    var length = point_distance(0, 0, hmove, vmove);
+    if (length > 0) {
+        hmove /= length; // Normalizasyon
+        vmove /= length; // Normalizasyon
+    }
+
+    // Karakterin pozisyonunu güncelle
+    x += hmove * move_speed;
+    y += vmove * move_speed;
+}
+
 
 // animation
 if (!reloading)
 {
 	if (hspeed != 0 || vspeed != 0) {
 	 // Hareket var, animasyonu oynat
+	 if (!keyboard_check(vk_lshift))
+	 {
 	 sprite_index = spr_player_walk; // Tek bir animasyon sprite'ı
 	 image_speed = 1; // Animasyon hızını ayarla 
+	 
+	 } else
+	 {
+	 sprite_index = spr_player_walk; // Tek bir animasyon sprite'ı
+	 image_speed = 0.5; // Animasyon hızını ayarla 
+	 }
+	 recoil = 5;
 	}	
 	else 
 	{
 	  sprite_index = spr_player_idle; // Durma animasyonu
 	 image_speed = 0;
+	 recoil = 2;
 	}
 }
 else
@@ -27,20 +50,17 @@ else
 	image_speed = 0.2;
 }
 
+//reload
 if(reloading)
-{
-	
-	
+{	
 	reloadprogress += delta_time;
 	if (reloadprogress >= reloadtime )
-	{
-		
+	{		
 		ammo = ammo - reqammo;
 		magammo += reqammo ;
 		reloading = false;
 		reloadprogress = 0;	
-	}
-	
+	}	
 }
 
 firingprogress -= delta_time;
